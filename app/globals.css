@@ -1,0 +1,118 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 200 24% 98%;
+    --foreground: 210 23% 16%;
+    --card: 0 0% 100%;
+    --card-foreground: 210 23% 16%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 210 23% 16%;
+    --primary: 174 46% 25%;
+    --primary-foreground: 42 38% 96%;
+    --secondary: 190 26% 92%;
+    --secondary-foreground: 210 23% 16%;
+    --muted: 210 20% 93%;
+    --muted-foreground: 215 14% 42%;
+    --accent: 345 34% 92%;
+    --accent-foreground: 210 23% 16%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 215 20% 82%;
+    --input: 215 20% 82%;
+    --ring: 174 46% 25%;
+    --radius: 0.5rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+}
+
+.app-shell {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 10% 0%, hsl(174 46% 25% / 0.08), transparent 32rem),
+    linear-gradient(180deg, hsl(200 24% 98%) 0%, hsl(210 20% 96%) 100%);
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  border-bottom: 1px solid hsl(var(--border));
+  background: hsl(var(--background) / 0.92);
+  backdrop-filter: blur(14px);
+}
+
+.site-header-inner {
+  width: 100%;
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.brand-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: hsl(var(--foreground));
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.brand-mark {
+  display: inline-flex;
+  height: 2.25rem;
+  width: 2.25rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  box-shadow: 0 10px 24px hsl(var(--primary) / 0.18);
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.dashboard-page {
+  width: 100%;
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 3rem 1rem 4rem;
+}
+
+.dashboard-heading {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.dashboard-card {
+  border: 1px solid hsl(var(--border));
+  border-radius: 0.75rem;
+  background: hsl(var(--card) / 0.96);
+  box-shadow: 0 20px 45px hsl(215 24% 30% / 0.08);
+}
+
+.account-workbench {
+  display: grid;
+  gap: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+  .account-workbench {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  }
+}
