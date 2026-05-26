@@ -67,6 +67,16 @@ export default function OnboardingPage() {
               />
             </div>
 
+            <div className="grid gap-2">
+              <Label htmlFor="family_member_name">Your name</Label>
+              <Input
+                id="family_member_name"
+                name="family_member_name"
+                placeholder="Alex Doe"
+                required
+              />
+            </div>
+
             <div className="flex flex-col gap-3 pt-2 sm:flex-row">
               <Button type="submit">
                 Continue to dashboard

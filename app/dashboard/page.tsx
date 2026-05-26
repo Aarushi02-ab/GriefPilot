@@ -9,16 +9,44 @@ import {
   CardHeader,
   CardTitle
 } from "@/components/ui/card";
-import { createSupabaseClient, type DigitalAccount } from "@/lib/supabase";
-import { AccountWorkbench } from "./account-workbench";
+import {
+  createSupabaseClient,
+  type DigitalAccount,
+  type Estate
+} from "@/lib/supabase";
+import { AccountGroups } from "./account-groups";
 
 export const dynamic = "force-dynamic";
 
-async function getTasks(): Promise<DigitalAccount[]> {
+async function getEstate(estateId?: string): Promise<Estate | null> {
+  if (!estateId) {
+    return null;
+  }
+
+  const supabase = createSupabaseClient();
+  const { data, error } = await supabase
+    .from("estates")
+    .select("id, name, email, date_of_death, created_at")
+    .eq("id", estateId)
+    .maybeSingle();
+
+  if (error) {
+    throw new Error(`Unable to load estate: ${error.message}`);
+  }
+
+  return data;
+}
+
+async function getTasks(estateId?: string): Promise<DigitalAccount[]> {
+  if (!estateId) {
+    return [];
+  }
+
   const supabase = createSupabaseClient();
   const { data, error } = await supabase
     .from("digital_accounts")
     .select("id, estate_id, platform_name, account_type, status, action_taken")
+    .eq("estate_id", estateId)
     .order("platform_name", { ascending: true });
 
   if (error) {
@@ -28,8 +56,20 @@ async function getTasks(): Promise<DigitalAccount[]> {
   return data ?? [];
 }
 
-export default async function DashboardPage() {
-  const tasks = await getTasks();
+export default async function DashboardPage({
+  searchParams
+}: {
+  searchParams?: {
+    estateId?: string;
+    familyMemberName?: string;
+  };
+}) {
+  const estateId = searchParams?.estateId;
+  const familyMemberName = searchParams?.familyMemberName ?? "";
+  const [estate, tasks] = await Promise.all([
+    getEstate(estateId),
+    getTasks(estateId)
+  ]);
 
   return (
     <main className="dashboard-page mx-auto flex max-w-6xl flex-col gap-8 px-4 py-12 sm:px-6 lg:px-8">
@@ -40,7 +80,8 @@ export default async function DashboardPage() {
             Tasks
           </h1>
           <p className="mt-3 max-w-2xl text-muted-foreground">
-            This is where the family task list will appear as GriefPilot grows.
+            Review discovered accounts, grouped by category, and draft outreach
+            letters for each platform.
           </p>
         </div>
         <Button asChild variant="outline">
@@ -53,42 +94,53 @@ export default async function DashboardPage() {
 
       <Card className="dashboard-card">
         <CardHeader>
-          <CardTitle>Task list</CardTitle>
+          <CardTitle>Estate summary</CardTitle>
           <CardDescription>
-            No tasks have been added yet.
+            {estate
+              ? `Digital account review for ${estate.name}.`
+              : "Start onboarding to create an estate and discover accounts."}
           </CardDescription>
         </CardHeader>
         <CardContent>
-          {tasks.length > 0 ? (
-            <ul className="divide-y rounded-md border">
-              {tasks.map((task) => (
-                <li key={task.id} className="px-4 py-3 text-sm">
-                  <div className="font-medium">{task.platform_name}</div>
-                  <div className="mt-1 text-muted-foreground">
-                    {task.account_type ?? "Account"} - {task.status}
-                  </div>
-                </li>
-              ))}
-            </ul>
+          {estate ? (
+            <div className="grid gap-4 sm:grid-cols-3">
+              <div className="rounded-md border bg-background p-4">
+                <p className="text-sm text-muted-foreground">Deceased</p>
+                <p className="mt-1 font-medium">{estate.name}</p>
+              </div>
+              <div className="rounded-md border bg-background p-4">
+                <p className="text-sm text-muted-foreground">Date of death</p>
+                <p className="mt-1 font-medium">{estate.date_of_death}</p>
+              </div>
+              <div className="rounded-md border bg-background p-4">
+                <p className="text-sm text-muted-foreground">
+                  Accounts discovered
+                </p>
+                <p className="mt-1 font-medium">{tasks.length}</p>
+              </div>
+            </div>
           ) : (
             <div className="flex min-h-56 flex-col items-center justify-center rounded-md border border-dashed bg-muted/40 p-8 text-center">
               <span className="flex h-12 w-12 items-center justify-center rounded-md bg-background text-muted-foreground">
                 <Inbox className="h-6 w-6" aria-hidden="true" />
               </span>
               <h2 className="mt-4 text-lg font-semibold tracking-normal">
-                No tasks yet
+                No estate selected
               </h2>
               <p className="mt-2 max-w-md text-sm leading-6 text-muted-foreground">
-                The dashboard is ready. Future task generation can fill this
-                space with estate, account, benefits, and family coordination
-                steps.
+                Use onboarding first so GriefPilot can save the estate and
+                discover likely digital accounts.
               </p>
             </div>
           )}
         </CardContent>
       </Card>
 
-      <AccountWorkbench />
+      <AccountGroups
+        accounts={tasks}
+        estate={estate}
+        familyMemberName={familyMemberName}
+      />
     </main>
   );
 }

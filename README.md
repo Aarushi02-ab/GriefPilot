@@ -36,9 +36,13 @@ OpenAI credits.
 
 - `/` - landing page explaining GriefPilot
 - `/onboarding` - family intake form
-- `/dashboard` - empty task dashboard scaffold
+- `/dashboard` - saved digital account dashboard grouped by category
 - `/api/discover-accounts` - POST endpoint for likely digital account discovery
 - `/api/draft-letter` - POST endpoint for digital estate letter drafting
+
+After onboarding, GriefPilot discovers likely digital accounts, saves them to
+Supabase, and shows them on the dashboard as category-grouped cards. Each saved
+account card can draft a letter in a modal.
 
 Example API request:
 
