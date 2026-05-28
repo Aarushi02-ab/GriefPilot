@@ -93,6 +93,120 @@ function getMockAccounts(domain: string): DiscoveryResponse {
         category: "streaming",
         suggested_action: "cancel",
         priority: 5
+      },
+      {
+        platform_name: "PayPal",
+        category: "finance",
+        suggested_action: "transfer",
+        priority: 9
+      },
+      {
+        platform_name: "Facebook",
+        category: "social",
+        suggested_action: "memorialize",
+        priority: 8
+      },
+      {
+        platform_name: "Instagram",
+        category: "social",
+        suggested_action: "memorialize",
+        priority: 8
+      },
+      {
+        platform_name: "Microsoft",
+        category: "work",
+        suggested_action: "transfer",
+        priority: 8
+      },
+      {
+        platform_name: "Apple",
+        category: "work",
+        suggested_action: "transfer",
+        priority: 8
+      },
+      {
+        platform_name: "Dropbox",
+        category: "work",
+        suggested_action: "transfer",
+        priority: 7
+      },
+      {
+        platform_name: "GitHub",
+        category: "work",
+        suggested_action: "transfer",
+        priority: 7
+      },
+      {
+        platform_name: "Adobe",
+        category: "work",
+        suggested_action: "cancel",
+        priority: 6
+      },
+      {
+        platform_name: "Hulu",
+        category: "streaming",
+        suggested_action: "cancel",
+        priority: 5
+      },
+      {
+        platform_name: "Disney+",
+        category: "streaming",
+        suggested_action: "cancel",
+        priority: 5
+      },
+      {
+        platform_name: "YouTube",
+        category: "streaming",
+        suggested_action: "transfer",
+        priority: 6
+      },
+      {
+        platform_name: "eBay",
+        category: "shopping",
+        suggested_action: "cancel",
+        priority: 6
+      },
+      {
+        platform_name: "Walmart",
+        category: "shopping",
+        suggested_action: "cancel",
+        priority: 5
+      },
+      {
+        platform_name: "Target",
+        category: "shopping",
+        suggested_action: "cancel",
+        priority: 5
+      },
+      {
+        platform_name: "Venmo",
+        category: "finance",
+        suggested_action: "transfer",
+        priority: 9
+      },
+      {
+        platform_name: "Cash App",
+        category: "finance",
+        suggested_action: "transfer",
+        priority: 9
+      },
+      {
+        platform_name: "Coinbase",
+        category: "finance",
+        suggested_action: "transfer",
+        priority: 10
+      },
+      {
+        platform_name: "Reddit",
+        category: "social",
+        suggested_action: "memorialize",
+        priority: 5
+      },
+      {
+        platform_name: "Pinterest",
+        category: "social",
+        suggested_action: "memorialize",
+        priority: 4
       }
     ]
   };

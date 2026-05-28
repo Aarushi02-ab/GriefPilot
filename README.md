@@ -27,6 +27,9 @@ OPENAI_API_KEY=your_openai_api_key
 OPENAI_MODEL=gpt-4o-mini
 OPENAI_MAX_OUTPUT_TOKENS=900
 OPENAI_MOCK_RESPONSES=false
+SUPABASE_SECRET_KEY=your_supabase_secret_key_for_server_routes
+RESEND_API_KEY=your_resend_api_key
+RESEND_FROM_EMAIL=GriefPilot <onboarding@resend.dev>
 ```
 
 Set `OPENAI_MOCK_RESPONSES=true` to test the local API routes without using
@@ -39,10 +42,13 @@ OpenAI credits.
 - `/dashboard` - saved digital account dashboard grouped by category
 - `/api/discover-accounts` - POST endpoint for likely digital account discovery
 - `/api/draft-letter` - POST endpoint for digital estate letter drafting
+- `/api/send-letter` - POST endpoint for sending drafted letters with Resend
+- `/api/update-account-status` - POST endpoint for status tracker updates
 
 After onboarding, GriefPilot discovers likely digital accounts, saves them to
 Supabase, and shows them on the dashboard as category-grouped cards. Each saved
-account card can draft a letter in a modal.
+account card can draft a letter in a modal, send it with Resend, and track
+status from `Not started` to `Resolved`.
 
 Example API request:
 

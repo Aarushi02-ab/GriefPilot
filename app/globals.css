@@ -99,6 +99,18 @@
   justify-content: space-between;
 }
 
+.dashboard-hero {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid hsl(var(--border));
+  border-radius: 0.75rem;
+  background:
+    linear-gradient(135deg, hsl(0 0% 100% / 0.96), hsl(190 26% 92% / 0.72)),
+    radial-gradient(circle at 95% 15%, hsl(345 34% 92%), transparent 18rem);
+  padding: 2rem;
+  box-shadow: 0 24px 60px hsl(215 24% 30% / 0.08);
+}
+
 .dashboard-card {
   border: 1px solid hsl(var(--border));
   border-radius: 0.75rem;

@@ -3,7 +3,7 @@
 import { redirect } from "next/navigation";
 import { headers } from "next/headers";
 
-import { createSupabaseClient } from "@/lib/supabase";
+import { createSupabaseServerClient } from "@/lib/supabase";
 
 type DiscoveredAccount = {
   platform_name: string;
@@ -27,7 +27,7 @@ export async function createEstate(formData: FormData) {
   }
 
   const estateId = crypto.randomUUID();
-  const supabase = createSupabaseClient();
+  const supabase = createSupabaseServerClient();
   const { error } = await supabase.from("estates").insert({
     id: estateId,
     name,
@@ -74,8 +74,8 @@ export async function createEstate(formData: FormData) {
           estate_id: estateId,
           platform_name: account.platform_name,
           account_type: account.category,
-          status: account.suggested_action,
-          action_taken: null
+          status: "not_started",
+          action_taken: account.suggested_action
         }))
       );
 

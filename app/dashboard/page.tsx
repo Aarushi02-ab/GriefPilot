@@ -10,7 +10,7 @@ import {
   CardTitle
 } from "@/components/ui/card";
 import {
-  createSupabaseClient,
+  createSupabaseServerClient,
   type DigitalAccount,
   type Estate
 } from "@/lib/supabase";
@@ -23,7 +23,7 @@ async function getEstate(estateId?: string): Promise<Estate | null> {
     return null;
   }
 
-  const supabase = createSupabaseClient();
+  const supabase = createSupabaseServerClient();
   const { data, error } = await supabase
     .from("estates")
     .select("id, name, email, date_of_death, created_at")
@@ -42,7 +42,7 @@ async function getTasks(estateId?: string): Promise<DigitalAccount[]> {
     return [];
   }
 
-  const supabase = createSupabaseClient();
+  const supabase = createSupabaseServerClient();
   const { data, error } = await supabase
     .from("digital_accounts")
     .select("id, estate_id, platform_name, account_type, status, action_taken")
@@ -73,11 +73,11 @@ export default async function DashboardPage({
 
   return (
     <main className="dashboard-page mx-auto flex max-w-6xl flex-col gap-8 px-4 py-12 sm:px-6 lg:px-8">
-      <div className="dashboard-heading flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+      <div className="dashboard-heading dashboard-hero flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
         <div>
-          <p className="text-sm font-medium text-primary">Dashboard</p>
-          <h1 className="mt-3 text-3xl font-semibold tracking-normal">
-            Tasks
+          <p className="text-sm font-medium text-primary">Estate command center</p>
+          <h1 className="mt-3 text-4xl font-semibold tracking-normal">
+            Digital account recovery
           </h1>
           <p className="mt-3 max-w-2xl text-muted-foreground">
             Review discovered accounts, grouped by category, and draft outreach
